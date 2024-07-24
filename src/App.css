@@ -1,0 +1,13 @@
+/* #root {
+  max-width: 1280px;
+  padding: 2rem;
+} */
+
+.listContainer{
+    background-color: rgb(153, 153, 255);
+    width: 1000px;
+    height: 70vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
