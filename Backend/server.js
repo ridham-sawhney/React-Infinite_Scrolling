@@ -37,16 +37,19 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/data', async (req, res) => {
-    var {page,startIndex,limit}=req.body;
+app.get('/data/:pageParam', async (req, res) => {
+    const pageParam=req.params.pageParam;
+    console.log(pageParam)
     const fileContent = await fs.readFile('./data.json');
     const backEndData = JSON.parse(fileContent);
-    if(startIndex>backEndData.data.length){
-        throw new Error('Data Fetched out of bounds!')
-    }
-    const dataToSend = backEndData.data.splice(startIndex,limit);
+    // if(startIndex>backEndData.data.length){
+    //     throw new Error('Data Fetched out of bounds!')
+    // }
+    const dataToSend = backEndData.data.splice(pageParam*50,50);
     const data = {
-        data: dataToSend
+        data: dataToSend,
+        "hasNextPage": true,
+        "nextPage": +pageParam+1
     };
     res.status(200).json(data);
 });
